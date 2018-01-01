@@ -286,6 +286,7 @@
     <Content Include="Views\Admin\AddLeads.cshtml" />
     <Content Include="Views\Shared\_LayoutAgent.cshtml" />
     <Content Include="Views\Agent\Index.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

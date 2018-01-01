@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace CallCenterRoles.Models
 {
@@ -37,10 +38,13 @@ namespace CallCenterRoles.Models
         public DbSet<Lead> Leads { get; set; }
         public DbSet<DataLead> DataLeads { get; set; }
         public DbSet<UserLead> UserLeads { get; set; }
+        public IEnumerable<object> AspNetUsers { get; internal set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
+       // public System.Data.Entity.DbSet<CallCenterRoles.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

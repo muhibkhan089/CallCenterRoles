@@ -9,9 +9,10 @@ using System.Web.Mvc;
 
 namespace CallCenterRoles.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+        ApplicationDbContext db = new ApplicationDbContext();
         // GET: Admin
         public ActionResult Index()
         {
@@ -27,13 +28,18 @@ namespace CallCenterRoles.Controllers
         }
         public ActionResult ViewUsers()
         {
-            string[] roles = System.Web.Security.Roles.GetRolesForUser(User.Identity.Name);
-            return View();
+            var usersInRole = db.Users.Where(u =>
+            u.Roles.Join(db.Roles, usrRole => usrRole.RoleId,
+            role => role.Id, (usrRole, role) => role).Any(r => r.Name.Equals("User"))).ToList();
+
+            return View(usersInRole);
         }
         public ActionResult ViewAgents()
         {
-            
-            return View();
+            var usersInRole = db.Users.Where(u =>
+            u.Roles.Join(db.Roles, usrRole => usrRole.RoleId,
+            role => role.Id, (usrRole, role) => role).Any(r => r.Name.Equals("Agent"))).ToList();
+            return View(usersInRole);
         }
         public ActionResult ViewLeads()
         {
@@ -42,6 +48,28 @@ namespace CallCenterRoles.Controllers
         public ActionResult AddLeads()
         {
             return View();
+        }
+        public ActionResult Edit(string id)
+        {
+            var data = db.Users.Find(id);
+            return View(data);
+        }
+        [HttpPost]
+        public ActionResult Edit(ApplicationUser user)
+        {
+            var record = db.Users.SingleOrDefault(m => m.Id == user.Id);
+            record.FullName = user.FullName;
+            record.Email = user.Email;
+            record.UserName = user.UserName;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        public ActionResult Delete(string id)
+        {
+            var data = db.Users.SingleOrDefault(m => m.Id == id);
+            db.Users.Remove(data);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
