@@ -11,11 +11,11 @@ namespace CallCenterRoles.Models
     public class UserLead
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
-        public string LeadId { get; set; }
+        public int LeadId { get; set; }
         [ForeignKey("LeadId")]
         public virtual Lead Lead { get; set; }
     }

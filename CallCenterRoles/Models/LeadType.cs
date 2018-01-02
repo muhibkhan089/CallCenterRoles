@@ -11,7 +11,7 @@ namespace CallCenterRoles.Models
     public class LeadType
     {
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
         [StringLength(128)]
         public string Name { get; set; }
     }

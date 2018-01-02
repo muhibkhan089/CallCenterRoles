@@ -1,12 +1,13 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutAgent.cshtml";
 }
-@section addNewField{
+@section dataTableJs{
     <script>
         $(document).ready(function () {
-            var count = 1;
+            var preCount = 0;
+            var nextCount = 1;
             var count1 = 1;
             $('#demo-form')
                 // Add button click handler
@@ -14,21 +15,23 @@
                     var $template = $('#optionTemplate'),
                         $clone = $template
                             .clone()
-                            .removeClass('hide')
                             .removeAttr('id')
+                            .removeClass('hide')
                             .insertBefore($template),
-                        $option = $clone.find('[name="optionLabel[]"]');
-                    $option1 = $clone.find('[name="optionText[]"]');
-                    $option.attr('id', 'insurance_label_' + count + '');
-                    $option1.attr('id', 'insurance_text_' + count + '');
-                    count++;
+                        $option = $clone.find('[id="optionLabel0"]');
+                        $option1 = $clone.find('[id="optionText0"]');
+
+                    $option.attr('name', 'insurance_label_' + nextCount);
+                    $option1.attr('name', 'insurance_text_' + nextCount);
+                    
+                    nextCount++;
 
                 })
 
                 // Remove button click handler
                 .on('click', '.removeButton', function () {
                     var $row = $(this).parents('.form-group'),
-                        $option = $row.find('[name="optionLabel[]"]');
+                        $option = $row.find('[id="optionLabel0"]');
 
                     // Remove element containing the option
                     $row.remove();
@@ -45,8 +48,8 @@
                             .insertBefore($template),
                         $option = $clone.find('[name="optionLabel[]"]');
                     $option1 = $clone.find('[name="optionText[]"]');
-                    $option.attr('id', 'seo_label_' + count1 + '');
-                    $option1.attr('id', 'seo_text_' + count1 + '');
+                    $option.attr('name', 'seo_label_' + count1 + '');
+                    $option1.attr('name', 'seo_text_' + count1 + '');
                     count1++;
 
                 })
@@ -100,33 +103,53 @@
                                 <div role="tabpanel" class="tab-pane fade" id="tab_content1" aria-labelledby="home-tab">
                                     <div class="x_content">
                                         <br />
-                                        <form id="demo-form" data-parsley-validate class="form-horizontal form-label-left">
+                                        <form id="demo-form" data-parsley-validate class="form-horizontal form-label-left" method="post" action="InsuranceLead\@User.Identity.GetUserId()">
                                             <div class="form-group">
-                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                                                    Agent First Name <span class="required">*</span>
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                                    Name <span class="required">*</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input type="text" id="agent_first_name" required="required" class="form-control col-md-7 col-xs-12">
+                                                    <input type="text" id="seo_name" name="insurance_name" required="required" class="form-control col-md-7 col-xs-12">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                                                    Agent Last Name <span class="required">*</span>
+                                                    Phone<span class="required">*</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input type="text" id="agent_last_name" name="agent_last_name" required="required" class="form-control col-md-7 col-xs-12">
+                                                    <input type="text" id="seo_phone" name="insurance_phone" required="required" class="form-control col-md-7 col-xs-12">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="agent-name" class="control-label col-md-3 col-sm-3 col-xs-12">Agent Username / Initial</label>
+                                                <label for="seo_email" class="control-label col-md-3 col-sm-3 col-xs-12">Email
+                                                    <span class="required">*</span>
+                                                </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input id="agent_username" class="form-control col-md-7 col-xs-12" type="text" name="agent_username">
+                                                    <input id="seo_email" class="form-control col-md-7 col-xs-12" type="email" required="required" name="insurance_email">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Agent Password / Initial</label>
+                                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Age
+                                                    <span class="required">*</span>
+                                                </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input id="agent_pwd" class="form-control col-md-7 col-xs-12" type="password" name="agent_password">
+                                                    <input id="age" class="form-control col-md-7 col-xs-12" type="text" required="required" name="age">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                    Income <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input id="income" name="income" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                    Address<span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input id="address" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" name="address">
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -142,20 +165,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                                    Date Of Birth <span class="required">*</span>
-                                                </label>
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input id="birthday" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
-                                                </div>
-                                            </div>
+
                                             <div class="form-group hide" id="optionTemplate">
                                                 <div class="col-md-3 col-sm-3 col-xs-12">
-                                                    <input class="form-control col-md-7 col-xs-12" type="text" placeholder="Lead Label" name="optionLabel[]">
+                                                    <input class="form-control col-md-7 col-xs-12" type="text" id="optionLabel0" placeholder="Lead Label" name="optionLabel">
                                                 </div>
                                                 <div class="col-md-6 col-sm-6 col-xs-10">
-                                                    <input class="form-control col-md-7 col-xs-12" type="text" placeholder="Lead Text" name="optionText[]">
+                                                    <input class="form-control col-md-7 col-xs-12" type="text" id="optionText0" placeholder="Lead Text" name="optionText">
                                                 </div>
                                                 <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
                                             </div>
@@ -173,57 +189,59 @@
                                 <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
                                     <div class="x_content">
                                         <br />
-                                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="seoLead\@User.Identity.GetUserId()">
                                             <div class="form-group">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-                                                    Agent First Name <span class="required">*</span>
+                                                    Name <span class="required">*</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input type="text" id="agent_first_name1" required="required" class="form-control col-md-7 col-xs-12">
+                                                    <input type="text" id="seo_name" name="seo_name" required="required" class="form-control col-md-7 col-xs-12">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">
-                                                    Agent Last Name <span class="required">*</span>
+                                                    Phone<span class="required">*</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input type="text" id="agent_last_name1" name="agent_last_name" required="required" class="form-control col-md-7 col-xs-12">
+                                                    <input type="text" id="agent_last_name1" name="seo_phone" required="required" class="form-control col-md-7 col-xs-12">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="agent-name" class="control-label col-md-3 col-sm-3 col-xs-12">Agent Username / Initial</label>
+                                                <label for="seo_email" class="control-label col-md-3 col-sm-3 col-xs-12">Email
+                                                    <span class="required">*</span>
+                                                </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input id="agent_username1" class="form-control col-md-7 col-xs-12" type="text" name="agent_username">
+                                                    <input id="seo_email" class="form-control col-md-7 col-xs-12" required="required" type="email" name="seo_email">
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Agent Password / Initial</label>
+                                                <label for="website" class="control-label col-md-3 col-sm-3 col-xs-12">Website
+                                                    <span class="required">*</span>
+                                                </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input id="agent_pwd1" class="form-control col-md-7 col-xs-12" type="password" name="agent_password">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
-                                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <div class="btn-group" data-toggle="buttons">
-                                                        <label class="btn btn-default" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="gender" value="male"> &nbsp; Male &nbsp;
-                                                        </label>
-                                                        <label class="btn btn-primary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                                            <input type="radio" name="gender" value="female"> Female
-                                                        </label>
-                                                    </div>
+                                                    <input id="website" class="form-control col-md-7 col-xs-12" type="text" required="required" name="website">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                                    Date Of Birth <span class="required">*</span>
+                                                    Url<span class="required">*</span>
                                                 </label>
                                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                                    <input id="birthday1" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+                                                    <input id="url" name="url" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
 
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                                    Keyword<span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <input id="keyword" name="keyword" class="date-picker form-control col-md-7 col-xs-12" required="required" type="text">
+
+                                                </div>
+                                            </div>
+
+
                                             <div class="form-group hide" id="optionTemplate1">
                                                 <div class="col-md-3 col-sm-3 col-xs-12">
                                                     <input class="form-control col-md-7 col-xs-12" type="text" placeholder="Lead Label" name="optionLabel[]">

@@ -11,12 +11,19 @@ namespace CallCenterRoles.Models
     public class DataLead
     {
         [Key]
-        public string Id { get; set; }
-        public string LeadId { get; set; }
+        public int Id { get; set; }
+        
+        public int LeadId { get; set; }
         [ForeignKey("LeadId")]
         public virtual Lead Lead { get; set; }
         public string FieldName { get; set; }
         public string FieldValue { get; set; }
 
+    }
+    public class MyLeadModel
+    {
+        public int dataLeadId { get; set; }
+        public string dataFieldName { get; set; }
+        public string dataFieldValue { get; set; }
     }
 }
