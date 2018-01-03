@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="~/Content/images/favicon.ico" type="image/ico" />
-    <title>Gentelella Alela! | </title>
+    <title>Call Center! |@User.Identity.GetUserName() </title>
     <!-- Bootstrap -->
     <link href="~/Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Font Awesome -->
@@ -38,13 +38,13 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="~/Agent/Index" class="site_title">@*<i class="fa fa-paw"></i>*@ <span>Company Name</span></a>
+                        <a href="~/Agent/Index" class="site_title"><i class="fa fa-paw"></i> <span>Call Center</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="~/Content/images/img.jpg" alt="..." class="img-circle profile_img">
+                            <img src="~/Content/images/user.png" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -61,9 +61,6 @@
                                     <a href="~/Agent/Index"><i class="fa fa-home"></i> Home </a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-edit"></i> Project Types</a>
-                                </li>
-                                <li>
                                     <a><i class="fa fa-bar-chart-o"></i>My Leads <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li><a href="~/Agent/SeoLead">Seo Leads</a></li>
@@ -78,16 +75,7 @@
                     <!-- /sidebar menu -->
                     <!-- /menu footer buttons -->
                     <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings">
-                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                            <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Lock">
-                            <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                        </a>
-                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" href="~/Account/LogOff">
                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         </a>
                     </div>
@@ -104,19 +92,12 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/Content/images/img.jpg" alt="">@User.Identity.GetUserName()
+                                    <img src="~/Content/images/user.png" alt="">@User.Identity.GetUserName()
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    @*<li><a href="~/Account/Login"><i class="fa fa-sign-out pull-right"></i>@Html.Partial("_LoginPartial")</a></li>*@
-                                    @if (Request.IsAuthenticated)
-                                    {
-                                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                                        {
-                                            @Html.AntiForgeryToken()
-                                            <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out pull-right"></i>Log out</a></li>
-                                        }
-                                    }
+                                    <li><a href="~/Account/LogOff"><i class="fa fa-sign-out pull-right"></i>Log Out</a></li>
+                                    
                                 </ul>
                             </li>
 
@@ -129,7 +110,7 @@
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+                    
                 </div>
                 <div class="clearfix"></div>
             </footer>
@@ -180,5 +161,3 @@
 </body>
 </html>
 
-</body>
-</html>

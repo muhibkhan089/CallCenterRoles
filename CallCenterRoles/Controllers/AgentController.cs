@@ -7,10 +7,10 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 namespace CallCenterRoles.Controllers
 {
-    [Authorize(Roles ="Agent")]
+    [Authorize(Roles = "Agent")]
     public class AgentController : Controller
     {
-        
+
         ApplicationDbContext db = new ApplicationDbContext();
         // GET: Agent
         public ActionResult Index()
@@ -21,8 +21,8 @@ namespace CallCenterRoles.Controllers
         [HttpPost]
         public ActionResult InsuranceLead(string id)
         {
-            int leadId=0;
-            string check=null;
+            int leadId = 0;
+            string check = null;
             try
             {
                 if (ModelState.IsValid)
@@ -64,7 +64,7 @@ namespace CallCenterRoles.Controllers
                 //ViewBag.Name = Request["gender"];
                 list.Add(item);
             }
-            int listCount=list.Count()-2;
+            int listCount = list.Count() - 2;
             for (int i = 0; i < listCount; i++)
             {
                 if (i == 0)
@@ -123,13 +123,13 @@ namespace CallCenterRoles.Controllers
                     db.DataLeads.Add(dataLead);
                     db.SaveChanges();
                 }
-                else if ((i > 6 && i%2!=0) && Request[list[i]] != "")
+                else if ((i > 6 && i % 2 != 0) && Request[list[i]] != "")
                 {
                     dataLead.LeadId = leadId;
                     dataLead.FieldName = Request[list[i]];
                     check = Request[list[i]];
                 }
-                else if ((i > 6 && i % 2 == 0) && check!=null)
+                else if ((i > 6 && i % 2 == 0) && check != null)
                 {
                     dataLead.FieldValue = Request[list[i]];
                     db.DataLeads.Add(dataLead);
@@ -138,14 +138,14 @@ namespace CallCenterRoles.Controllers
 
 
             }
-            
+
             return RedirectToAction("InsuranceLead");
         }
         [HttpPost]
         public ActionResult SeoLead(string id)
         {
             int leadId = 0;
-            string check=null;
+            string check = null;
             try
             {
                 if (ModelState.IsValid)
@@ -238,14 +238,14 @@ namespace CallCenterRoles.Controllers
                     db.DataLeads.Add(dataLead);
                     db.SaveChanges();
                 }
-                
-                else if ((i > 5 && i % 2 == 0) && Request[list[i]]!="")
+
+                else if ((i > 5 && i % 2 == 0) && Request[list[i]] != "")
                 {
                     dataLead.LeadId = leadId;
                     dataLead.FieldName = Request[list[i]];
                     check = Request[list[i]];
                 }
-                else if ((i > 5 && i % 2 != 0)&& check!=null)
+                else if ((i > 5 && i % 2 != 0) && check != null)
                 {
                     dataLead.FieldValue = Request[list[i]];
                     db.DataLeads.Add(dataLead);
@@ -254,10 +254,10 @@ namespace CallCenterRoles.Controllers
             }
             return RedirectToAction("SeoLead");
         }
-       
+
         public ActionResult SeoLead()
         {
-            var agentId=User.Identity.GetUserId();
+            var agentId = User.Identity.GetUserId();
             List<MyLeadModel> model = new List<MyLeadModel>();
             var person = (from p in db.DataLeads
                           join e in db.Leads
@@ -266,23 +266,27 @@ namespace CallCenterRoles.Controllers
                           select new
                           {
                               dataFieldId = p.LeadId,
-                              dataFieldName=p.FieldName,
-                              dataFieldValue=p.FieldValue
+                              dataFieldName = p.FieldName,
+                              dataFieldValue = p.FieldValue
                           }).ToList();
-
+            bool check = true;
             foreach (var item in person)
             {
+                if (check)
+                    ViewBag.count = item.dataFieldId;
                 model.Add(new MyLeadModel()
                 {
                     dataLeadId = item.dataFieldId,
-                    dataFieldName=item.dataFieldName,
-                    dataFieldValue=item.dataFieldValue
-            });
-        }
+                    dataFieldName = item.dataFieldName,
+                    dataFieldValue = item.dataFieldValue
+                });
+                check = false;
+            }
             return View(model);
         }
         public ActionResult InsuranceLead()
         {
+            
             var agentId = User.Identity.GetUserId();
             List<MyLeadModel> model = new List<MyLeadModel>();
             var person = (from p in db.DataLeads
@@ -295,7 +299,32 @@ namespace CallCenterRoles.Controllers
                               dataFieldName = p.FieldName,
                               dataFieldValue = p.FieldValue
                           }).ToList();
-
+            bool check = true;
+            foreach (var item in person)
+            {
+                if (check)
+                    ViewBag.count = item.dataFieldId;
+                model.Add(new MyLeadModel()
+                {
+                    dataLeadId = item.dataFieldId,
+                    dataFieldName = item.dataFieldName,
+                    dataFieldValue = item.dataFieldValue
+                });
+                check = false;
+            }
+            return View(model);
+        }
+        public ActionResult DetailLead(int id)
+        {
+            List<MyLeadModel> model = new List<MyLeadModel>();
+            var person = (from p in db.DataLeads
+                          where (p.LeadId == id)
+                          select new
+                          {
+                              dataFieldId = p.LeadId,
+                              dataFieldName = p.FieldName,
+                              dataFieldValue = p.FieldValue
+                          }).ToList();
             foreach (var item in person)
             {
                 model.Add(new MyLeadModel()

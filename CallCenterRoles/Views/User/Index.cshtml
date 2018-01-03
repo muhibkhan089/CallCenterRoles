@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<CallCenterRoles.Models.MyLeadModel>
 @{
-
-    ViewBag.Title = "Insurance Lead";
-    Layout = "~/Views/Shared/_LayoutAgent.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-
 
 @section dataTableCss{
     <link href="~/Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
@@ -17,7 +15,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Leads </h3>
+                <h3>Leads</h3>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -25,7 +23,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Insurance Leads</h2>
+                        <h2>Lead</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -41,66 +39,39 @@
                                 <tr>
 
                                     <th>
-                                        Name
+                                        Lead Id
                                     </th>
                                     <th>
-                                        Phone
+                                        Lead Name
                                     </th>
                                     <th>
-                                        Email
-                                    </th>
-                                    <th>
-                                        Age
-                                    </th>
-                                    <th>
-                                        Income
-                                    </th>
-                                    <th>
-                                        Address
-                                    </th>
-                                    <th>
-                                        Gender
-                                    </th>
-                                    <th>
-                                        Detail
+                                        Lead Value
                                     </th>
                                 </tr>
                             </thead>
-                            @{var count = ViewBag.count;}
+
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    if (count != item.dataLeadId && item.dataFieldName == "Name")
-                                    {
-                                        @:<tr>
-                                        count++;
-                                    }
-                                    else if (count == ViewBag.count)
-                                    {
-                                        @:<tr>
-                                        ViewBag.count--;
-                                    }
-
-                                    if (item.dataFieldName == "Name" || item.dataFieldName == "Email" || item.dataFieldName == "Phone" || item.dataFieldName == "Income" || item.dataFieldName == "Address" || item.dataFieldName == "Gender" || item.dataFieldName == "Age")
-                                    {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.dataLeadId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.dataFieldName)
+                                        </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.dataFieldValue)
                                         </td>
-                                        if (item.dataFieldName == "Gender")
-                                        {
-                                            <td>
-                                                @Html.ActionLink("Detail", "DetailLead", new { id = item.dataLeadId }, new { @class = "btn btn-primary" })
-                                            </td>
-                                        }
-                                    }
+                                    </tr>
                                 }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <!-- /page content -->
 @section dataTableJs{
@@ -120,3 +91,7 @@
     <script src="~/Content/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/Content/vendors/pdfmake/build/vfs_fonts.js"></script>
 }
+
+
+
+

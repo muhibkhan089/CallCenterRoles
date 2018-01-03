@@ -200,6 +200,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CountModel.cs" />
     <Compile Include="Models\DataLead.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lead.cs" />
@@ -274,8 +275,6 @@
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Account\EventRegister.cshtml" />
-    <Content Include="Views\Admin\ViewProject.cshtml" />
-    <Content Include="Views\Admin\AddProject.cshtml" />
     <Content Include="Views\Admin\ViewUsers.cshtml" />
     <Content Include="Views\Admin\ViewAgents.cshtml" />
     <Content Include="Views\Admin\ViewLeads.cshtml" />
@@ -285,10 +284,16 @@
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Agent\SeoLead.cshtml" />
     <Content Include="Views\Agent\InsuranceLead.cshtml" />
+    <Content Include="Views\Admin\InsuranceLead.cshtml" />
+    <Content Include="Views\Admin\SeoLead.cshtml" />
+    <Content Include="Views\Admin\AssignLead.cshtml" />
+    <Content Include="Views\Shared\_LayoutUser.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Agent\DetailLead.cshtml" />
+    <Content Include="Views\Admin\EditLead.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

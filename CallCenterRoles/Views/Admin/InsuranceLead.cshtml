@@ -1,10 +1,8 @@
 ﻿@model IEnumerable<CallCenterRoles.Models.MyLeadModel>
 @{
-
-    ViewBag.Title = "Insurance Lead";
-    Layout = "~/Views/Shared/_LayoutAgent.cshtml";
+    ViewBag.Title = "InsuranceLead";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
 
 @section dataTableCss{
     <link href="~/Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
@@ -17,7 +15,7 @@
     <div class="">
         <div class="page-title">
             <div class="title_left">
-                <h3>Leads </h3>
+                <h3>Insurance Lead</h3>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -25,7 +23,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Insurance Leads</h2>
+                        <h2>Insurance Lead</h2>
                         <ul class="nav navbar-right panel_toolbox">
                             <li>
                                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -64,11 +62,17 @@
                                     <th>
                                         Detail
                                     </th>
+                                    @if (ViewBag.Id != null)
+                                    {
+                                        <th>
+                                            Assign
+                                        </th>
+                                    }
                                 </tr>
                             </thead>
                             @{var count = ViewBag.count;}
                             <tbody>
-                                @foreach (var item in Model)
+                                 @foreach (var item in Model)
                                 {
                                     if (count != item.dataLeadId && item.dataFieldName == "Name")
                                     {
@@ -79,28 +83,37 @@
                                     {
                                         @:<tr>
                                         ViewBag.count--;
-                                    }
+                                     }
 
-                                    if (item.dataFieldName == "Name" || item.dataFieldName == "Email" || item.dataFieldName == "Phone" || item.dataFieldName == "Income" || item.dataFieldName == "Address" || item.dataFieldName == "Gender" || item.dataFieldName == "Age")
-                                    {
+                                     if (item.dataFieldName == "Name" || item.dataFieldName == "Email" || item.dataFieldName == "Phone" || item.dataFieldName == "Income" || item.dataFieldName == "Address" || item.dataFieldName == "Gender" || item.dataFieldName == "Age")
+                                     {
                                         <td>
                                             @Html.DisplayFor(modelItem => item.dataFieldValue)
                                         </td>
                                         if (item.dataFieldName == "Gender")
                                         {
                                             <td>
-                                                @Html.ActionLink("Detail", "DetailLead", new { id = item.dataLeadId }, new { @class = "btn btn-primary" })
+                                                @Html.ActionLink("Detail", "ViewLeads", new {id=item.dataLeadId } , new {@class="btn btn-primary" })
+                                            </td>
+                                            if (ViewBag.Id != null)
+                                        {
+                                            <td>
+                                                @Html.ActionLink("Assign", "AssignLeadToUser", new { id = item.dataLeadId, userId = ViewBag.Id }, new { @class = "btn btn-primary btn-small" })
+
                                             </td>
                                         }
+                                        }
                                     }
+                                        
+                                   
                                 }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <!-- /page content -->
 @section dataTableJs{
@@ -120,3 +133,7 @@
     <script src="~/Content/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="~/Content/vendors/pdfmake/build/vfs_fonts.js"></script>
 }
+
+
+
+
