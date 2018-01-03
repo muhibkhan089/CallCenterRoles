@@ -212,8 +212,27 @@ namespace CallCenterRoles.Controllers
         }
         public ActionResult DeleteLead(int id)
         {
-            //db.DataLeads.Remove(db.DataLeads.Find(id));
+            List<DataLead> leads = new List<DataLead>();
+            leads = db.DataLeads.Where(m=>m.LeadId==id).ToList();
+            foreach (DataLead item in leads)
+            {
+                db.DataLeads.Remove(item);
+            }
+            List<UserLead> uLead = new List<UserLead>();
+            uLead = db.UserLeads.Where(m => m.LeadId == id).ToList();
+            foreach (UserLead item in uLead)
+            {
+                db.UserLeads.Remove(item);
 
+            }
+            List<Lead> lead = new List<Lead>();
+            lead = db.Leads.Where(m => m.Id == id).ToList();
+            foreach (Lead item in lead)
+            {
+                db.Leads.Remove(item);
+
+            }
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
     }

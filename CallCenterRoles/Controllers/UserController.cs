@@ -17,7 +17,7 @@ namespace CallCenterRoles.Controllers
         {
             var userId = User.Identity.GetUserId();
             List<MyLeadModel> model = new List<MyLeadModel>();
-            var person = (from p in db.DataLeads
+            var lead = (from p in db.DataLeads
                           join e in db.UserLeads
                           on p.LeadId equals e.LeadId
                           where (e.UserId == userId )
@@ -28,7 +28,7 @@ namespace CallCenterRoles.Controllers
                               dataFieldValue = p.FieldValue
                           }).ToList();
 
-            foreach (var item in person)
+            foreach (var item in lead)
             {
                 model.Add(new MyLeadModel()
                 {
